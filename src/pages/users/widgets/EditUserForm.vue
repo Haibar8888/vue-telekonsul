@@ -17,6 +17,11 @@ const props = defineProps({
   },
 })
 
+// const projectMap = {
+//   telekons: "550e8400-e29b-41d4-a716-446655440000",
+//   projectB: "123e4567-e89b-12d3-a456-426614174000"
+// };
+
 const defaultNewUser: Omit<User, 'id'> = {
   avatar: '',
   fullname: '',
@@ -25,14 +30,15 @@ const defaultNewUser: Omit<User, 'id'> = {
   notes: '',
   email: '',
   active: true,
-  projects: [],
+  // projects: [],
+  // projects: ['telekon', 'vue', 'react'],
 }
 
 const newUser = ref<User>({ ...defaultNewUser } as User)
 
 const isFormHasUnsavedChanges = computed(() => {
   return Object.keys(newUser.value).some((key) => {
-    if (key === 'avatar' || key === 'projects') {
+    if (key === 'avatar') {
       return false
     }
 
@@ -57,7 +63,7 @@ watch(
 
     newUser.value = {
       ...props.user,
-      projects: props.user.projects.filter((projectId) => projects.value.find(({ id }) => id === projectId)),
+      // projects: props.user.projects.filter((projectId) => projects.value.find(({ id }) => id === projectId)),
       avatar: props.user.avatar || '',
     }
   },
@@ -136,21 +142,8 @@ const roleSelectOptions: { text: Capitalize<Lowercase<UserRole>>; value: UserRol
           :rules="[validators.required, validators.email]"
           name="email"
         />
-        <VaSelect
-          v-model="newUser.projects"
-          label="Projects"
-          class="w-full sm:w-1/2"
-          :options="projects"
-          value-by="id"
-          text-by="project_name"
-          :rules="[validators.required]"
-          name="projects"
-          multiple
-          :max-visible-options="2"
-        />
-      </div>
-
-      <div class="flex gap-4 w-full">
+        <!-- <VaSelect v-model="newUser.projects" label="Projects" class="w-full sm:w-1/2" :options="projects" value-by="id"
+          text-by="project_name" :rules="[validators.required]" name="projects" multiple :max-visible-options="2" /> -->
         <div class="w-1/2">
           <VaSelect
             v-model="newUser.role"
@@ -162,7 +155,9 @@ const roleSelectOptions: { text: Capitalize<Lowercase<UserRole>>; value: UserRol
             value-by="value"
           />
         </div>
+      </div>
 
+      <div class="flex gap-4 w-full">
         <div class="flex items-center w-1/2 mt-4">
           <VaCheckbox v-model="newUser.active" label="Active" class="w-full" name="active" />
         </div>

@@ -19,7 +19,7 @@ export type Filters = {
 
 export const getUsers = async (filters: Partial<Filters & Pagination & Sorting>) => {
   const { isActive, search } = filters
-  let filteredUsers: User[] = await fetch(api.allUsers()).then((r) => r.json())
+  let filteredUsers: User[] = await fetch('../../../public/users-db.json').then((r) => r.json())
 
   filteredUsers = filteredUsers.filter((user) => user.active === isActive)
 
@@ -42,9 +42,14 @@ export const addUser = async (user: User) => {
   const headers = new Headers()
   headers.append('Content-Type', 'application/json')
 
-  const result = await fetch(api.allUsers(), { method: 'POST', body: JSON.stringify(user), headers }).then((r) =>
-    r.json(),
-  )
+  // const result = await fetch(api.allUsers(), { method: 'POST', body: JSON.stringify(user), headers }).then((r) =>
+  //   r.json(),
+  // )
+  const result = await fetch('../../../public/users-db.json', {
+    method: 'POST',
+    body: JSON.stringify(user),
+    headers,
+  }).then((r) => r.json())
 
   if (!result.error) {
     return result
