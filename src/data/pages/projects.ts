@@ -13,7 +13,7 @@ export type Sorting = {
 }
 
 export const getProjects = async (options: Partial<Sorting> & Pagination) => {
-  const projects: Project[] = await fetch(api.allProjects()).then((r) => r.json())
+  const projects: Project[] = await fetch('../../../public/projects-db.json').then((r) => r.json())
 
   return {
     data: projects,
@@ -24,6 +24,28 @@ export const getProjects = async (options: Partial<Sorting> & Pagination) => {
     },
   }
 }
+
+// export const getProjects = async (options = { page: 1, perPage: 10 }) => {
+//   const response = await fetch('../../../public/projects-db.json') // Ganti dengan path yang benar
+//   const projects = await response.json()
+
+//   console.log('projects:', projects)
+
+//   // Paginasi dengan nilai default
+//   const { page, perPage } = options
+//   const total = projects.length
+//   const start = (page - 1) * perPage
+//   const paginatedProjects = projects.slice(start, start + perPage)
+
+//   return {
+//     data: paginatedProjects,
+//     pagination: {
+//       page,
+//       perPage,
+//       total,
+//     },
+//   }
+// }
 
 export const addProject = async (project: Omit<Project, 'id' | 'created_at'>) => {
   const headers = new Headers()

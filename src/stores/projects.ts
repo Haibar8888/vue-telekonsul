@@ -20,6 +20,8 @@ export const useProjectsStore = defineStore('projects', {
         ...options.sorting,
         ...options.pagination,
       })
+      console.log('projects')
+      console.log(data)
       this.items = data
       this.pagination = pagination
     },
