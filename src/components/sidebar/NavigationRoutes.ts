@@ -11,97 +11,169 @@ export default {
     displayName: 'navigationRoutes.home',
   },
   routes: [
+    // master
     {
-      name: 'dashboard',
-      displayName: 'menu.dashboard',
-      meta: {
-        icon: 'vuestic-iconset-dashboard',
-      },
-    },
-    {
-      name: 'users',
-      displayName: 'menu.users',
-      meta: {
-        icon: 'group',
-      },
-    },
-    {
-      name: 'projects',
-      displayName: 'menu.projects',
-      meta: {
-        icon: 'folder_shared',
-      },
-    },
-    {
-      name: 'payments',
-      displayName: 'menu.payments',
+      name: 'Master',
+      displayName: 'Master',
       meta: {
         icon: 'credit_card',
       },
       children: [
         {
-          name: 'payment-methods',
-          displayName: 'menu.payment-methods',
+          name: 'doctors',
+          displayName: 'Doctors',
+          meta: {
+            icon: 'group',
+          },
         },
         {
-          name: 'pricing-plans',
-          displayName: 'menu.pricing-plans',
-        },
-        {
-          name: 'billing',
-          displayName: 'menu.billing',
+          name: 'schedules',
+          displayName: 'schedules',
+          meta: {
+            icon: 'group',
+          },
         },
       ],
     },
+    // management access
     {
-      name: 'auth',
-      displayName: 'menu.auth',
+      name: 'management-access',
+      displayName: 'Management Access',
       meta: {
-        icon: 'login',
+        icon: 'credit_card',
       },
       children: [
         {
-          name: 'login',
-          displayName: 'menu.login',
+          name: 'users',
+          displayName: 'menu.users',
+          meta: {
+            icon: 'group',
+          },
         },
         {
-          name: 'signup',
-          displayName: 'menu.signup',
+          name: 'permission',
+          displayName: 'Permisions',
+          meta: {
+            icon: 'group',
+          },
         },
         {
-          name: 'recover-password',
-          displayName: 'menu.recover-password',
+          name: 'roles',
+          displayName: 'Roles',
+          meta: {
+            icon: 'group',
+          },
         },
       ],
     },
+    // operational
+    {
+      name: 'opeartional',
+      displayName: 'Opeartional',
+      meta: {
+        icon: 'credit_card',
+      },
+      children: [
+        {
+          name: 'appointment',
+          displayName: 'Appointment',
+          meta: {
+            icon: 'group',
+          },
+        },
+        {
+          name: 'transaction',
+          displayName: 'Transaction',
+          meta: {
+            icon: 'group',
+          },
+        },
+      ],
+    },
+    {
+      name: 'chats',
+      displayName: 'chats',
+      meta: {
+        icon: 'group',
+      },
+    },
+    // {
+    //   name: 'projects',
+    //   displayName: 'menu.projects',
+    //   meta: {
+    //     icon: 'folder_shared',
+    //   },
+    // },
+    // {
+    //   name: 'payments',
+    //   displayName: 'menu.payments',
+    //   meta: {
+    //     icon: 'credit_card',
+    //   },
+    //   children: [
+    //     {
+    //       name: 'payment-methods',
+    //       displayName: 'menu.payment-methods',
+    //     },
+    //     {
+    //       name: 'pricing-plans',
+    //       displayName: 'menu.pricing-plans',
+    //     },
+    //     {
+    //       name: 'billing',
+    //       displayName: 'menu.billing',
+    //     },
+    //   ],
+    // },
+    // {
+    //   name: 'auth',
+    //   displayName: 'menu.auth',
+    //   meta: {
+    //     icon: 'login',
+    //   },
+    //   children: [
+    //     {
+    //       name: 'login',
+    //       displayName: 'menu.login',
+    //     },
+    //     {
+    //       name: 'signup',
+    //       displayName: 'menu.signup',
+    //     },
+    //     {
+    //       name: 'recover-password',
+    //       displayName: 'menu.recover-password',
+    //     },
+    //   ],
+    // },
 
-    {
-      name: 'faq',
-      displayName: 'menu.faq',
-      meta: {
-        icon: 'quiz',
-      },
-    },
-    {
-      name: '404',
-      displayName: 'menu.404',
-      meta: {
-        icon: 'vuestic-iconset-files',
-      },
-    },
-    {
-      name: 'preferences',
-      displayName: 'menu.preferences',
-      meta: {
-        icon: 'manage_accounts',
-      },
-    },
-    {
-      name: 'settings',
-      displayName: 'menu.settings',
-      meta: {
-        icon: 'settings',
-      },
-    },
+    // {
+    //   name: 'faq',
+    //   displayName: 'menu.faq',
+    //   meta: {
+    //     icon: 'quiz',
+    //   },
+    // },
+    // {
+    //   name: '404',
+    //   displayName: 'menu.404',
+    //   meta: {
+    //     icon: 'vuestic-iconset-files',
+    //   },
+    // },
+    // {
+    //   name: 'preferences',
+    //   displayName: 'menu.preferences',
+    //   meta: {
+    //     icon: 'manage_accounts',
+    //   },
+    // },
+    // {
+    //   name: 'settings',
+    //   displayName: 'menu.settings',
+    //   meta: {
+    //     icon: 'settings',
+    //   },
+    // },
   ] as INavigationRoute[],
 }

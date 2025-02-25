@@ -17,6 +17,84 @@ const routes: Array<RouteRecordRaw> = [
     redirect: { name: 'dashboard' },
     children: [
       {
+        name: 'master',
+        path: '/master',
+        component: RouteViewComponent,
+        children: [
+          {
+            name: 'doctors',
+            path: 'doctors',
+            component: () => import('../pages/doctors/DoctorsPage.vue'),
+          },
+          {
+            name: 'schedules',
+            path: 'schedules',
+            component: () => import('../pages/users/UsersPage.vue'),
+          },
+        ],
+      },
+      {
+        name: 'management-access',
+        path: '/management-access',
+        component: RouteViewComponent,
+        children: [
+          {
+            name: 'users',
+            path: 'users',
+            component: () => import('../pages/users/UsersPage.vue'),
+          },
+          {
+            name: 'roles',
+            path: 'roles',
+            component: () => import('../pages/roles/rolesPage.vue'),
+          },
+          {
+            name: 'permission',
+            path: 'permisions',
+            component: () => import('../pages/permisions/permisionPage.vue'),
+          },
+        ],
+      },
+      {
+        name: 'opeartional',
+        path: '/opeartional',
+        component: RouteViewComponent,
+        children: [
+          {
+            name: 'appointment',
+            path: 'appointment',
+            component: () => import('../pages/users/UsersPage.vue'),
+          },
+          {
+            name: 'transaction',
+            path: 'transaction',
+            component: () => import('../pages/payments/PaymentsPage.vue'),
+          },
+        ],
+      },
+      {
+        name: 'payments',
+        path: '/payments',
+        component: RouteViewComponent,
+        children: [
+          {
+            name: 'payment-methods',
+            path: 'payment-methods',
+            component: () => import('../pages/payments/PaymentsPage.vue'),
+          },
+          {
+            name: 'billing',
+            path: 'billing',
+            component: () => import('../pages/billing/BillingPage.vue'),
+          },
+          {
+            name: 'pricing-plans',
+            path: 'pricing-plans',
+            component: () => import('../pages/pricing-plans/PricingPlans.vue'),
+          },
+        ],
+      },
+      {
         name: 'dashboard',
         path: 'dashboard',
         component: () => import('../pages/admin/dashboard/Dashboard.vue'),
@@ -35,6 +113,11 @@ const routes: Array<RouteRecordRaw> = [
         name: 'users',
         path: 'users',
         component: () => import('../pages/users/UsersPage.vue'),
+      },
+      {
+        name: 'chats',
+        path: 'chats',
+        component: () => import('../pages/chat/chatPage.vue'),
       },
       {
         name: 'projects',
