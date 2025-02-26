@@ -2,19 +2,20 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
 import AuthLayout from '../layouts/AuthLayout.vue'
 import AppLayout from '../layouts/AppLayout.vue'
+import { useAuthStore } from '../stores/auth'
 
 import RouteViewComponent from '../layouts/RouterBypass.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/:pathMatch(.*)*',
-    redirect: { name: 'dashboard' },
+    redirect: { name: '404' },
   },
   {
     name: 'admin',
     path: '/',
     component: AppLayout,
-    redirect: { name: 'dashboard' },
+    redirect: { name: 'login' },
     children: [
       {
         name: 'master',
@@ -24,11 +25,13 @@ const routes: Array<RouteRecordRaw> = [
           {
             name: 'doctors',
             path: 'doctors',
+            meta: { requiresAuth: true },
             component: () => import('../pages/doctors/DoctorsPage.vue'),
           },
           {
             name: 'schedules',
             path: 'schedules',
+            meta: { requiresAuth: true },
             component: () => import('../pages/users/UsersPage.vue'),
           },
         ],
@@ -41,16 +44,19 @@ const routes: Array<RouteRecordRaw> = [
           {
             name: 'users',
             path: 'users',
+            meta: { requiresAuth: true },
             component: () => import('../pages/users/UsersPage.vue'),
           },
           {
             name: 'roles',
             path: 'roles',
+            meta: { requiresAuth: true },
             component: () => import('../pages/roles/rolesPage.vue'),
           },
           {
             name: 'permission',
             path: 'permisions',
+            meta: { requiresAuth: true },
             component: () => import('../pages/permisions/permisionPage.vue'),
           },
         ],
@@ -63,11 +69,13 @@ const routes: Array<RouteRecordRaw> = [
           {
             name: 'appointment',
             path: 'appointment',
+            meta: { requiresAuth: true },
             component: () => import('../pages/users/UsersPage.vue'),
           },
           {
             name: 'transaction',
             path: 'transaction',
+            meta: { requiresAuth: true },
             component: () => import('../pages/payments/PaymentsPage.vue'),
           },
         ],
@@ -98,10 +106,12 @@ const routes: Array<RouteRecordRaw> = [
         name: 'dashboard',
         path: 'dashboard',
         component: () => import('../pages/admin/dashboard/Dashboard.vue'),
+        meta: { requiresAuth: true },
       },
       {
         name: 'settings',
         path: 'settings',
+        meta: { requiresAuth: true },
         component: () => import('../pages/settings/Settings.vue'),
       },
       {
@@ -112,11 +122,13 @@ const routes: Array<RouteRecordRaw> = [
       {
         name: 'users',
         path: 'users',
+        meta: { requiresAuth: true },
         component: () => import('../pages/users/UsersPage.vue'),
       },
       {
         name: 'chats',
         path: 'chats',
+        meta: { requiresAuth: true },
         component: () => import('../pages/chat/chatPage.vue'),
       },
       {
@@ -160,6 +172,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         name: 'login',
         path: 'login',
+        meta: { guestOnly: true },
         component: () => import('../pages/auth/Login.vue'),
       },
       {
@@ -204,6 +217,28 @@ const router = createRouter({
     }
   },
   routes,
+})
+
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore()
+
+  // Jika user belum login dan mencoba mengakses halaman yang butuh autentikasi
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    next({ name: 'login' }) // Redirect ke login
+  }
+  // Jika user sudah login dan mencoba mengakses halaman guest (login, signup)
+  else if (to.meta.guestOnly && authStore.isAuthenticated) {
+    next({ name: 'dashboard' }) // Redirect ke dashboard
+  } else {
+    next() // Lanjutkan navigasi
+  }
+  // const authStore = useAuthStore()
+
+  // if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+  //   next('/login')
+  // } else {
+  //   next()
+  // }
 })
 
 export default router
