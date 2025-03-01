@@ -36,17 +36,17 @@ watchEffect(() => {
 })
 
 const onUserSaved = async (user: User) => {
-  if (user.avatar.startsWith('blob:')) {
-    const blob = await fetch(user.avatar).then((r) => r.blob())
-    const { publicUrl } = await usersApi.uploadAvatar(blob)
-    user.avatar = publicUrl
-  }
+  // if (user.avatar.startsWith('blob:')) {
+  //   const blob = await fetch(user.avatar).then((r) => r.blob())
+  //   const { publicUrl } = await usersApi.uploadAvatar(blob)
+  //   user.avatar = publicUrl
+  // }
 
   if (userToEdit.value) {
     await usersApi.update(user)
     if (!error.value) {
       notify({
-        message: `${user.fullname} has been updated`,
+        message: `${user.name} has been updated`,
         color: 'success',
       })
     }
@@ -55,7 +55,7 @@ const onUserSaved = async (user: User) => {
 
     if (!error.value) {
       notify({
-        message: `${user.fullname} has been created`,
+        message: `${user.name} has been created`,
         color: 'success',
       })
     }
@@ -65,7 +65,7 @@ const onUserSaved = async (user: User) => {
 const onUserDelete = async (user: User) => {
   await usersApi.remove(user)
   notify({
-    message: `${user.fullname} has been deleted`,
+    message: `${user.name} has been deleted`,
     color: 'success',
   })
 }
@@ -97,15 +97,6 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
     <VaCardContent>
       <div class="flex flex-col md:flex-row gap-2 mb-2 justify-between">
         <div class="flex flex-col md:flex-row gap-2 justify-start">
-          <VaButtonToggle
-            v-model="filters.isActive"
-            color="background-element"
-            border-color="background-element"
-            :options="[
-              { label: 'Active', value: true },
-              { label: 'Inactive', value: false },
-            ]"
-          />
           <VaInput v-model="filters.search" placeholder="Search">
             <template #prependInner>
               <VaIcon name="search" color="secondary" size="small" />

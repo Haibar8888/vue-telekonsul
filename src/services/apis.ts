@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useAuthStore } from '../stores/auth'
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api/v1/', // Ganti dengan URL backend kamu
+  baseURL: 'http://10.1.1.186/api/v1/', // Ganti dengan URL backend kamu
   headers: {
     'Content-Type': 'application/json',
   },
@@ -19,5 +19,17 @@ api.interceptors.request.use(
   },
   (error) => Promise.reject(error),
 )
+// api.interceptors.request.use(
+//   (config) => {
+//     const authStore = useAuthStore() // Dapatkan store setiap kali request dilakukan
+//     const token = authStore.token // Ambil token terbaru
+
+//     if (token) {
+//       config.headers.Authorization = `Bearer ${token}`
+//     }
+//     return config
+//   },
+//   (error) => Promise.reject(error),
+// )
 
 export default api

@@ -1,5 +1,6 @@
 import { User } from '../../pages/users/types'
 import api from '../../services/api'
+import apis from '../../services/apis'
 
 export type Pagination = {
   page: number
@@ -13,18 +14,17 @@ export type Sorting = {
 }
 
 export type Filters = {
-  isActive: boolean
+  // isActive: boolean
   search: string
 }
 
 export const getUsers = async (filters: Partial<Filters & Pagination & Sorting>) => {
-  const { isActive, search } = filters
-  let filteredUsers: User[] = await fetch('../../../public/users-db.json').then((r) => r.json())
-
-  filteredUsers = filteredUsers.filter((user) => user.active === isActive)
+  const { search } = filters
+  let filteredUsers: User[] = await apis.get('/users').then((r) => r.data.success)
+  // let filteredUserss: User[] = await apis.get('/users').then((r) => r.data.body)
 
   if (search) {
-    filteredUsers = filteredUsers.filter((user) => user.fullname.toLowerCase().includes(search.toLowerCase()))
+    filteredUsers = filteredUsers.filter((user) => user.name.toLowerCase().includes(search.toLowerCase()))
   }
 
   const { page = 1, perPage = 10 } = filters || {}
