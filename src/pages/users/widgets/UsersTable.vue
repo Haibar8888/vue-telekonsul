@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { defineVaDataTableColumns, useModal } from 'vuestic-ui'
-import { User, UserRole } from '../types'
-import UserAvatar from './UserAvatar.vue'
+import { User } from '../types'
 import { PropType, computed, toRef } from 'vue'
 import { Pagination, Sorting } from '../../../data/pages/users'
 import { useVModel } from '@vueuse/core'
 import { Project } from '../../projects/types'
 
 const columns = defineVaDataTableColumns([
-  { label: 'Full Name', key: 'fullname', sortable: true },
+  { label: 'Name', key: 'name', sortable: true },
+  { label: 'NIK', key: 'nik', sortable: true },
   { label: 'Email', key: 'email', sortable: true },
-  { label: 'Username', key: 'username', sortable: true },
-  { label: 'Role', key: 'role', sortable: true },
+  // { label: 'Username', key: 'username', sortable: true },
+
   // { label: 'Projects', key: 'projects', sortable: true },
   { label: ' ', key: 'actions', align: 'right' },
 ])
@@ -39,14 +39,16 @@ const emit = defineEmits<{
 }>()
 
 const users = toRef(props, 'users')
+console.log('users tabel')
+console.log(users)
 const sortByVModel = useVModel(props, 'sortBy', emit)
 const sortingOrderVModel = useVModel(props, 'sortingOrder', emit)
 
-const roleColors: Record<UserRole, string> = {
-  admin: 'danger',
-  user: 'background-element',
-  owner: 'warning',
-}
+// const roleColors: Record<UserRole, string> = {
+//   admin: 'danger',
+//   user: 'background-element',
+//   owner: 'warning',
+// }
 
 const totalPages = computed(() => Math.ceil(props.pagination.total / props.pagination.perPage))
 
@@ -55,7 +57,7 @@ const { confirm } = useModal()
 const onUserDelete = async (user: User) => {
   const agreed = await confirm({
     title: 'Delete user',
-    message: `Are you sure you want to delete ${user.fullname}?`,
+    message: `Are you sure you want to delete ${user.name}?`,
     okText: 'Delete',
     cancelText: 'Cancel',
     size: 'small',
@@ -76,28 +78,25 @@ const onUserDelete = async (user: User) => {
     :items="users"
     :loading="$props.loading"
   >
-    <template #cell(fullname)="{ rowData }">
-      <div class="flex items-center gap-2 max-w-[230px] ellipsis">
-        <UserAvatar :user="rowData as User" size="small" />
-        {{ rowData.fullname }}
+    <template #cell(name)="{ rowData }">
+      <div class="ellipsis max-w-[230px]">
+        {{ rowData.name }}
       </div>
     </template>
-
-    <template #cell(username)="{ rowData }">
-      <div class="max-w-[120px] ellipsis">
-        {{ rowData.username }}
+    <template #cell(nik)="{ rowData }">
+      <div class="ellipsis max-w-[230px]">
+        {{ rowData.nik }}
       </div>
     </template>
-
     <template #cell(email)="{ rowData }">
       <div class="ellipsis max-w-[230px]">
         {{ rowData.email }}
       </div>
     </template>
 
-    <template #cell(role)="{ rowData }">
+    <!-- <template #cell(role)="{ rowData }">
       <VaBadge :text="rowData.role" :color="roleColors[rowData.role as UserRole]" />
-    </template>
+    </template> -->
 
     <template #cell(actions)="{ rowData }">
       <div class="flex gap-2 justify-end">
